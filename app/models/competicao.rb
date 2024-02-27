@@ -1,4 +1,5 @@
 class Competicao < ApplicationRecord
+  validates :nome, presence: true
   has_many :resultado_competicaos
   has_many :atletas, through: :resultado_competicaos
   has_many :resultados, through: :resultado_competicaos

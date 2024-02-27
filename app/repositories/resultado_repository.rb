@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ResultadoRepository
-  def create(valor, unidade)
-    Resultado.create(valor, unidade)
+  def create(valor:, unidade:)
+    Resultado.create(valor:, unidade:)
   end
 
   def find(resultado_id)

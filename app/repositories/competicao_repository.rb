@@ -6,7 +6,7 @@
 # competições sem depender diretamente do ActiveRecord.
 class CompeticaoRepository
   def create(nome, finalizada)
-    Competicao.create(nome, finalizada)
+    Competicao.create(nome:, finalizada:)
   end
 
   def find(competicao_id)

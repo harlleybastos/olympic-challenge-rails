@@ -8,6 +8,4 @@ Rails.application.routes.draw do
   end
 
   resources :atletas, only: [:create]
-
-  root 'welcome#index'
 end

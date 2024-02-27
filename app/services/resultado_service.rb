@@ -1,12 +1,16 @@
 class ResultadoService
   def self.adicionar_resultado(atleta_id, competicao_id, valor, unidade)
-    atleta = AtletaRepository.new.find(atleta_id:)
-    competicao = CompeticaoRepository.new.find(competicao_id:)
+    competicao_repo = CompeticaoRepository.new
+    competicao = competicao_repo.find(competicao_id)
+
+    raise 'Competição já finalizada' if competicao.finalizada
+
+    atleta_repo = AtletaRepository.new
+    atleta = atleta_repo.find(atleta_id)
 
     resultado_repo = ResultadoRepository.new
     resultado = resultado_repo.create(valor:, unidade:)
-    resultado_repo.save(resultado)
 
-    ResultadoCompeticao.new.create(atleta, competicao, resultado)
+    ResultadoCompeticaoRepository.new.create(atleta:, competicao:, resultado:)
   end
 end
