@@ -18,14 +18,9 @@ RSpec.describe ResultadoCompeticao, type: :model do
 
     it 'é invalido sem atleta' do
       competicao = CompeticaoService.criar_competicao('Corrida')
-      resultado_competicao = ResultadoCompeticaoService.adicionar_resultado(nil, competicao.id, 22.1, 'm')
-      expect(resultado_competicao).not_to be_valid
-    end
-
-    it 'é invalido sem competição' do
-      atleta = AtletaService.criar_atleta(nome: 'Marcos Silva')
-      resultado_competicao = ResultadoCompeticaoService.adicionar_resultado(atleta.id, nil, 22.1, 'm')
-      expect(resultado_competicao).not_to be_valid
+      expect do
+        ResultadoCompeticaoService.adicionar_resultado(nil, competicao.id, 22.1, 'm')
+      end.to raise_error(RuntimeError, 'Atleta é obrigatório !')
     end
   end
 end

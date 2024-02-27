@@ -9,6 +9,9 @@ class ResultadoService
     atleta = atleta_repo.find(atleta_id)
 
     resultado_repo = ResultadoRepository.new
+
+    raise 'Valor e Unidade são obrigatórios !' if valor.blank? || unidade.blank?
+
     resultado = resultado_repo.create(valor:, unidade:)
 
     ResultadoCompeticaoRepository.new.create(atleta:, competicao:, resultado:)

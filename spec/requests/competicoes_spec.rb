@@ -7,12 +7,12 @@ RSpec.describe CompeticoesController, type: :request do
     let(:valid_attributes) { { competicao: { nome: 'Dardo semifinal' } } }
 
     scenario 'cria uma nova competicao' do
-        expect {
-          post competicoes_path, params: valid_attributes
-        }.to change(Competicao, :count).by(1)
+      expect do
+        post competicoes_path, params: valid_attributes
+      end.to change(Competicao, :count).by(1)
     end
   end
-  
+
   describe 'POST /competicoes/:id/finalizar' do
     scenario 'finaliza uma competicao' do
       post finalizar_competicao_competico_path(competicao), params: {}

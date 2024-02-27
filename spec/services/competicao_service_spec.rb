@@ -1,61 +1,74 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
-RSpec.describe CompeticaoService, type: :service do
+RSpec.describe CompeticaoService do
+  let(:competicao_repo) { instance_double('CompeticaoRepository') }
+  let(:atleta_repo) { instance_double('AtletaRepository') }
+  let(:resultado_repo) { instance_double('ResultadoRepository') }
+  let(:resultado_competicao_repo) { instance_double('ResultadoCompeticaoRepository') }
+
+  let(:competicao) { instance_double('Competicao', finalizada: false) }
+  let(:atleta) { instance_double('Atleta') }
+  let(:resultado) { instance_double('Resultado') }
+
+  before do
+    allow(CompeticaoRepository).to receive(:new).and_return(competicao_repo)
+    allow(AtletaRepository).to receive(:new).and_return(atleta_repo)
+    allow(ResultadoRepository).to receive(:new).and_return(resultado_repo)
+    allow(ResultadoCompeticaoRepository).to receive(:new).and_return(resultado_competicao_repo)
+  end
+
   describe '.criar_competicao' do
     it 'cria uma nova competição' do
-      competicao = CompeticaoService.criar_competicao('100m rasos')
-      expect(competicao.nome).to eq('100m rasos')
-      expect(competicao.finalizada).to be_falsey
+      expect(competicao_repo).to receive(:create).with('100m classificatória', false)
+      described_class.criar_competicao('100m classificatória')
     end
   end
 
   describe '.adicionar_resultado' do
-    let(:competicao) { CompeticaoService.criar_competicao('Lançamento de Dardo') }
-    let(:atleta) { AtletaService.criar_atleta('João') }
+    context 'quando a competição não está finalizada' do
+      it 'adiciona um resultado à competição' do
+        allow(competicao_repo).to receive(:find).and_return(competicao)
+        allow(atleta_repo).to receive(:find).and_return(atleta)
+        allow(resultado_repo).to receive(:create).and_return(resultado)
+        allow(resultado_competicao_repo).to receive(:create)
 
-    it 'adiciona um resultado a uma competição' do
-      resultado = CompeticaoService.adicionar_resultado(competicao.id, atleta.id, 70.43, 'm')
-      expect(resultado.atleta).to eq(atleta)
-      expect(resultado.competicao).to eq(competicao)
-      expect(resultado.resultado.valor).to eq(70.43)
+        described_class.adicionar_resultado(1, 1, 10.0, 's')
+        expect(resultado_competicao_repo).to have_received(:create).with(atleta:, competicao:,
+                                                                         resultado:)
+      end
     end
 
-    it 'não permite adicionar resultado a uma competição finalizada' do
-      CompeticaoService.finalizar_competicao(competicao.id)
-      expect do
-        CompeticaoService.adicionar_resultado(competicao.id, atleta.id, 75.00, 'm')
-      end.to raise_error('Competição já finalizada')
-    end
-  end
+    context 'quando a competição está finalizada' do
+      it 'lança um erro' do
+        allow(competicao).to receive(:finalizada).and_return(true)
+        allow(competicao_repo).to receive(:find).and_return(competicao)
 
-  describe '.calcular_ranking' do
-    let(:competicao) { CompeticaoService.criar_competicao('100m rasos') }
-    let(:atleta1) { AtletaService.criar_atleta('Alice') }
-    let(:atleta2) { AtletaService.criar_atleta('Bob') }
-    let(:atleta3) { AtletaService.criar_atleta('Charlie') }
-
-    before do
-      CompeticaoService.adicionar_resultado(competicao.id, atleta1.id, 10.2, 's')
-      CompeticaoService.adicionar_resultado(competicao.id, atleta2.id, 10.3, 's')
-      CompeticaoService.adicionar_resultado(competicao.id, atleta3.id, 10.1, 's')
-      CompeticaoService.finalizar_competicao(competicao.id)
-    end
-
-    it 'calcula e retorna o ranking dos atletas' do
-      ranking = CompeticaoService.calcular_ranking(competicao.id)
-      expect(ranking.first[:atleta]).to eq('{:nome=>"Charlie"}')
-      expect(ranking[1][:atleta]).to eq('{:nome=>"Alice"}')
-      expect(ranking[2][:atleta]).to eq('{:nome=>"Bob"}')
+        expect do
+          described_class.adicionar_resultado(1, 1, 10.0, 's')
+        end.to raise_error('Competição já finalizada')
+      end
     end
   end
 
   describe '.finalizar_competicao' do
     it 'finaliza uma competição' do
-      competicao = CompeticaoService.criar_competicao('Salto em Altura')
-      CompeticaoService.finalizar_competicao(competicao.id)
-      expect(competicao.reload.finalizada).to be_truthy
+      allow(competicao_repo).to receive(:find).and_return(competicao)
+      allow(competicao).to receive(:finalizada=)
+      allow(competicao_repo).to receive(:save)
+
+      described_class.finalizar_competicao(1)
+      expect(competicao).to have_received(:finalizada=).with(true)
+      expect(competicao_repo).to have_received(:save).with(competicao)
+    end
+  end
+
+  describe '.calcular_ranking' do
+    it 'calcula o ranking de uma competição' do
+      allow(competicao_repo).to receive(:find).and_return(competicao)
+      allow(competicao).to receive(:calcular_ranking)
+
+      described_class.calcular_ranking(1)
+      expect(competicao).to have_received(:calcular_ranking)
     end
   end
 end

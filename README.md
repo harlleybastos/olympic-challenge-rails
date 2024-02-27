@@ -1,24 +1,98 @@
-# README
+Sobre o Projeto
+---------------
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+OlympicChallengeRails é uma aplicação Rails desenvolvida com o objetivo de gerenciar competições esportivas e seus resultados. Utilizando o enfoque de Desenvolvimento Dirigido por Domínio (DDD), esta aplicação oferece uma estrutura clara e modular, facilitando a manutenção e expansão das funcionalidades.
 
-Things you may want to cover:
+Funcionalidades
+---------------
 
-* Ruby version
+A aplicação inclui as seguintes rotas e funcionalidades:
 
-* System dependencies
+-   **Criação de competições**: Permite criar novas competições esportivas.
+-   **Adição de resultados**: Insere resultados de atletas em competições específicas.
+-   **Finalização de competições**: Marca uma competição como finalizada.
+-   **Cálculo de ranking**: Gera um ranking dos atletas baseado em seus resultados.
 
-* Configuration
+Benefícios e Competências Adquiridas
+------------------------------------
 
-* Database creation
+Ao utilizar este projeto, você terá a oportunidade de:
 
-* Database initialization
+-   **Aplicar e Aprofundar Conhecimentos em Rails**: Com a estrutura e funcionalidades implementadas, você pode explorar e compreender como uma aplicação Rails madura é estruturada e operada.
+-   **Entender o Uso do DDD**: Este projeto é um exemplo prático de como o Desenvolvimento Dirigido por Domínio pode ser aplicado em uma aplicação real, proporcionando uma arquitetura limpa e modular.
+-   **Experiência com Docker em Rails**: A configuração completa do Docker demonstra como containerizar uma aplicação Rails, uma habilidade essencial no desenvolvimento moderno.
+-   **Prática com Testes Automatizados**: O projeto inclui testes escritos com RSpec, permitindo que você veja exemplos de testes em um ambiente de produção.
 
-* How to run the test suite
+Pré-Requisitos
+--------------
 
-* Services (job queues, cache servers, search engines, etc.)
+-   Docker e Docker Compose
+-   Conhecimento básico em Ruby on Rails
+-   Conhecimento em testes com RSpec
+-   Conhecimento em DDD
 
-* Deployment instructions
+Configuração do Ambiente
+------------------------
 
-* ...
+### Variáveis de Ambiente
+
+Crie um arquivo `.env` na raiz do projeto com as todas as variáveis do arquivo `.env.sample`:
+
+
+```bash
+POSTGRES_HOST=db
+POSTGRES_DB=nome_do_seu_db
+POSTGRES_USER=seu_usuario
+POSTGRES_PASSWORD=sua_senha 
+RAILS_ENV=development
+```
+
+### Docker
+
+O projeto é totalmente configurado para ser executado em contêineres Docker. Para construir e iniciar a aplicação, siga os passos abaixo:
+
+1.  Construa a imagem do projeto:
+
+    `docker-compose build`
+
+2.  Inicie os serviços:
+
+    `docker-compose up`
+
+A aplicação estará disponível em `http://localhost:3000`.
+
+O banco de dados estará disponível em `http://localhost:5432`
+
+Executando Testes
+-----------------
+
+Para executar os testes, use o seguinte comando:
+
+arduinoCopy code
+
+`docker-compose run web rspec`
+
+Recursos de Estudo
+------------------
+
+-   **Ruby on Rails**: [Guia Oficial](https://guides.rubyonrails.org/)
+-   **RSpec**: Documentação Oficial
+-   **Desenvolvimento Dirigido por Domínio (DDD)**: Domain-Driven Design Distilled by Vaughn Vernon
+-   **Domain Modeling in Ruby on Rails with introduction to Domain-Driven Design - Paweł Strzałkowski**: [Video Youtube](https://www.youtube.com/watch?v=94Atco5-tRQ)
+-   **Docker para Desenvolvedores**: Documentação Docker
+
+Contribuição
+------------
+
+Suas contribuições são sempre bem-vindas. Siga estas etapas para contribuir:
+
+1.  Faça um fork do projeto.
+2.  Crie uma nova branch com suas mudanças (`git checkout -b feature/minhaNovaFeature`).
+3.  Faça commit das suas alterações (`git commit -am 'Adiciona alguma feature'`).
+4.  Faça push para a branch (`git push origin feature/minhaNovaFeature`).
+5.  Crie um Pull Request.
+
+Licença
+-------
+
+Este projeto está sob a licença MIT.

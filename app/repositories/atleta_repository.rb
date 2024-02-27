@@ -4,7 +4,7 @@ class AtletaRepository
   def create(nome)
     Atleta.create(nome)
   end
-  
+
   def find(atleta_id)
     Atleta.find(atleta_id)
   end
