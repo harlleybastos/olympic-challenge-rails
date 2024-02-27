@@ -119,8 +119,3 @@ Suas contribuições são sempre bem-vindas. Siga estas etapas para contribuir:
 3.  Faça commit das suas alterações (`git commit -am 'Adiciona alguma feature'`).
 4.  Faça push para a branch (`git push origin feature/minhaNovaFeature`).
 5.  Crie um Pull Request.
-
-Licença
--------
-
-Este projeto está sob a licença MIT.
