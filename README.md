@@ -98,8 +98,6 @@ Executando Testes
 
 Para executar os testes, use o seguinte comando:
 
-arduinoCopy code
-
 `docker-compose run web rspec`
 
 Recursos de Estudo
