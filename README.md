@@ -13,6 +13,36 @@ A aplicação inclui as seguintes rotas e funcionalidades:
 -   **Finalização de competições**: Marca uma competição como finalizada.
 -   **Cálculo de ranking**: Gera um ranking dos atletas baseado em seus resultados.
 
+Rotas
+-----------------------
+
+A aplicação inclui as seguintes rotas e funcionalidades:
+
+1.  Criação de Atletas
+
+    -   Rota: `POST /atletas`
+    -   Permite o cadastro de novos atletas.
+2.  Listagem de Atletas
+
+    -   Rota: `GET /atletas`
+    -   Exibe todos os atletas cadastrados.
+3.  Criação de Competições
+
+    -   Rota: `POST /competicoes`
+    -   Permite criar novas competições esportivas.
+4.  Adição de Resultados
+
+    -   Rota: `POST /competicoes/:id/resultados`
+    -   Insere resultados de atletas em competições específicas.
+5.  Finalização de Competições
+
+    -   Rota: `POST /competicoes/:id/finalizar`
+    -   Marca uma competição como finalizada.
+6.  Cálculo de Ranking
+
+    -   Rota: `GET /competicoes/:id/ranking`
+    -   Gera um ranking dos atletas baseado em seus resultados.
+
 Benefícios e Competências Adquiridas
 ------------------------------------
 
