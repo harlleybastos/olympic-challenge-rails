@@ -1,8 +1,10 @@
 #!/bin/bash -e
 
-# If running the rails server then create or migrate existing database
-if [ "${*}" == "./bin/rails" ]; then
+# Check if the command includes "rails server"
+if echo "$@" | grep -q "rails server"; then
+  echo "Preparing database..."
   ./bin/rails db:prepare
 fi
 
-exec "${@}"
+# Execute the passed command
+exec "$@"

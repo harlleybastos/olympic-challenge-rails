@@ -7,7 +7,7 @@ RSpec.describe ResultadoCompeticao, type: :model do
     it { should belong_to(:resultado) }
   end
 
-  describe 'creation' do
+  describe 'criação' do
     it 'é valido com atributos' do
       atleta = AtletaService.criar_atleta(nome: 'Marcos Silva')
       competicao = CompeticaoService.criar_competicao('Corrida')
@@ -27,10 +27,5 @@ RSpec.describe ResultadoCompeticao, type: :model do
       resultado_competicao = ResultadoCompeticaoService.adicionar_resultado(atleta.id, nil, 22.1, 'm')
       expect(resultado_competicao).not_to be_valid
     end
-
-    # it 'is invalid without a resultado' do
-    #   resultado_competicao = ResultadoCompeticao.new(atleta: Atleta.new, competicao: Competicao.new, resultado: nil)
-    #   expect(resultado_competicao).not_to be_valid
-    # end
   end
 end

@@ -1,4 +1,9 @@
 class AtletasController < ApplicationController
+  def index
+    @atletas = Atleta.all
+    render json: @atletas
+  end
+
   def create
     atleta = AtletaService.criar_atleta(atleta_params[:nome])
 
